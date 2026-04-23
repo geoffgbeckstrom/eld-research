@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beckstrom ELD Scaffolded Research</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #1a1a1a;
+    background: #f5f5f3;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+
+  .wrap { max-width: 680px; margin: 0 auto; }
+
+  .hdr { border-bottom: 1px solid #e0ddd6; padding-bottom: 1rem; margin-bottom: 1.5rem; }
+  .hdr h1 { font-size: 20px; font-weight: 600; color: #1a1a1a; }
+  .hdr p { font-size: 13px; color: #666; margin-top: 3px; }
+
+  .stage { display: none; }
+  .stage.active { display: block; }
+
+  .bike-banner {
+    background: #f0faf5;
+    border-left: 3px solid #1D9E75;
+    border-radius: 0 8px 8px 0;
+    padding: 0.85rem 1rem;
+    margin-bottom: 1.25rem;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.6;
+  }
+  .bike-banner strong { color: #1a1a1a; }
+
+  .card {
+    background: #fff;
+    border: 1px solid #e0ddd6;
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .card-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .card-body { font-size: 15px; color: #333; line-height: 1.7; }
+
+  .section-title { font-size: 17px; font-weight: 600; color: #1a1a1a; margin-bottom: 1rem; }
+  .q-label { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+  .q-sub { font-size: 13px; color: #666; margin-bottom: 10px; line-height: 1.5; }
+
+  textarea {
+    width: 100%;
+    min-height: 80px;
+    font-size: 14px;
+    font-family: inherit;
+    padding: 10px;
+    border: 1px solid #d0cdc6;
+    border-radius: 8px;
+    background: #fff;
+    color: #1a1a1a;
+    resize: vertical;
+    line-height: 1.6;
+    margin-top: 8px;
+  }
+  textarea:focus { outline: none; border-color: #1D9E75; box-shadow: 0 0 0 3px rgba(29,158,117,0.1); }
+
+  input[type=text], input[type=password] {
+    width: 100%;
+    font-size: 14px;
+    font-family: inherit;
+    padding: 9px 12px;
+    border: 1px solid #d0cdc6;
+    border-radius: 8px;
+    background: #fff;
+    color: #1a1a1a;
+    margin-top: 8px;
+  }
+  input[type=text]:focus, input[type=password]:focus {
+    outline: none;
+    border-color: #1D9E75;
+    box-shadow: 0 0 0 3px rgba(29,158,117,0.1);
+  }
+
+  .btn {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 9px 18px;
+    border: 1px solid #c0bdb6;
+    border-radius: 8px;
+    background: #fff;
+    color: #1a1a1a;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .btn:hover { background: #f5f5f3; border-color: #999; }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+  .btn-primary:hover { background: #333; border-color: #333; }
+  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 1rem; }
+
+  .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 1rem; }
+  .choice-btn {
+    padding: 16px 14px;
+    border: 1px solid #e0ddd6;
+    border-radius: 12px;
+    background: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    color: #1a1a1a;
+    text-align: left;
+    line-height: 1.5;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .choice-btn:hover { border-color: #1D9E75; background: #f0faf5; }
+  .choice-icon { font-size: 22px; display: block; margin-bottom: 6px; }
+  .choice-title { font-weight: 600; display: block; }
+  .choice-desc { font-size: 12px; color: #666; margin-top: 3px; display: block; }
+
+  .progress-bar { display: flex; gap: 6px; margin-bottom: 1.5rem; }
+  .progress-step { height: 4px; flex: 1; border-radius: 2px; background: #ddd; }
+  .progress-step.done { background: #1D9E75; }
+  .progress-step.active { background: #1D9E75; opacity: 0.45; }
+
+  .answer-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 11px 14px;
+    margin-bottom: 6px;
+    border: 1px solid #e0ddd6;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    color: #1a1a1a;
+    transition: all 0.15s;
+  }
+  .answer-option:hover { background: #f5f5f3; border-color: #bbb; }
+  .answer-option.selected { border-color: #1D9E75; background: #f0faf5; color: #0f6e56; font-weight: 500; }
+  .answer-option.wrong { border-color: #c0392b; background: #fdf0ee; color: #c0392b; }
+  .answer-opt-title { font-weight: 600; display: block; }
+  .answer-opt-desc { font-size: 12px; color: #666; margin-top: 2px; display: block; }
+
+  .error-msg { font-size: 13px; color: #c0392b; margin-top: 6px; }
+
+  .loading-msg {
+    font-size: 14px;
+    color: #666;
+    padding: 1.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ddd;
+    border-top-color: #666;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .source-card {
+    background: #fff;
+    border: 1px solid #e0ddd6;
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .source-link { color: #1a1a1a; text-decoration: none; font-size: 15px; font-weight: 600; }
+  .source-link:hover { text-decoration: underline; color: #1D9E75; }
+  .source-meta { font-size: 12px; color: #888; margin: 4px 0 10px; }
+  .source-theme { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 10px; }
+
+  .craap-row { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+  .craap-pill { font-size: 11px; padding: 3px 9px; border-radius: 999px; font-weight: 600; }
+  .craap-pass { background: #e8f5e9; color: #2e7d32; }
+  .craap-warn { background: #fff3e0; color: #e65100; }
+
+  .why-credible {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.6;
+    border-top: 1px solid #f0ede6;
+    padding-top: 10px;
+    margin-top: 10px;
+  }
+  .why-strong { color: #1a1a1a; font-weight: 600; }
+
+  .diff-badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 6px; font-weight: 600; margin-left: 6px; vertical-align: middle; }
+  .diff-easy { background: #e8f5e9; color: #2e7d32; }
+  .diff-medium { background: #fff3e0; color: #e65100; }
+  .diff-hard { background: #fdecea; color: #c62828; }
+
+  .mla-box {
+    background: #f5f5f3;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+    font-family: "Courier New", monospace;
+    color: #555;
+    margin-top: 10px;
+    word-break: break-all;
+    line-height: 1.6;
+    border: 1px solid #e8e5de;
+  }
+
+  .annot-reminder {
+    background: #f0f6ff;
+    border-left: 3px solid #1976d2;
+    border-radius: 0 8px 8px 0;
+    padding: 8px 10px;
+    font-size: 12px;
+    color: #444;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  .simplified-wrap {
+    background: #fffbf0;
+    border: 1px solid #ffe082;
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    margin-top: 10px;
+  }
+  .simplified-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #e65100;
+    background: #fff3e0;
+    padding: 2px 9px;
+    border-radius: 999px;
+    margin-bottom: 8px;
+  }
+  .simplified-text { font-size: 14px; color: #333; line-height: 1.8; white-space: pre-wrap; }
+
+  .refuse-box {
+    background: #fff5f5;
+    border: 1px solid #fcc;
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+  .refuse-title { font-size: 16px; font-weight: 700; color: #c0392b; margin-bottom: 8px; }
+  .refuse-body { font-size: 14px; color: #555; line-height: 1.7; }
+
+  .next-card {
+    background: #f0faf5;
+    border: 1px dashed #1D9E75;
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .checklist { list-style: none; margin-top: 0.75rem; }
+  .checklist li {
+    font-size: 14px;
+    color: #555;
+    padding: 7px 0;
+    border-bottom: 1px solid #d4ede4;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.5;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check-icon { color: #1D9E75; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  .roadmap-list { margin-top: 8px; padding-left: 1.2rem; font-size: 13px; color: #555; line-height: 2.1; }
+  .roadmap-list strong { color: #1a1a1a; }
+
+  .topic-confirmed { font-size: 18px; font-weight: 700; margin-bottom: 10px; color: #1a1a1a; }
+  .topic-orient { font-size: 14px; color: #555; line-height: 1.7; }
+
+  .key-note {
+    background: #fff3e0;
+    border: 1px solid #ffb74d;
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 13px;
+    color: #7c4700;
+    line-height: 1.6;
+  }
+  .key-note strong { display: block; margin-bottom: 3px; font-size: 14px; color: #e65100; }
+
+  @media (max-width: 500px) {
+    body { padding: 1rem 0.75rem; }
+    .choice-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hdr">
+    <h1>Beckstrom ELD Scaffolded Research</h1>
+    <p>World History — Modern World Issues Project</p>
+  </div>
+
+  <!-- ── STAGE: API KEY SETUP ── -->
+  <div id="stage-apikey" class="stage active">
+    <div class="bike-banner">
+      <strong>This tool is your research bike, not your Uber.</strong><br>
+      It will help you find real, reliable sources — but you have to do the reading. It will never summarize articles for you or write your presentation. That part is yours.
+    </div>
+    <div class="card">
+      <div class="card-label">Setup — enter access key</div>
+      <div class="card-body">Your teacher will give you an access key. Type it below to get started.</div>
+      <input type="password" id="api-key-input" placeholder="Paste your access key here..." />
+      <div id="api-key-error" class="error-msg" style="display:none">Please enter the access key.</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="submitApiKey()">Start →</button>
+    </div>
+  </div>
+
+  <!-- ── STAGE: WELCOME ── -->
+  <div id="stage-welcome" class="stage">
+    <div class="bike-banner">
+      <strong>This tool is your research bike, not your Uber.</strong><br>
+      It will help you find real, reliable sources — but you have to do the reading. It will never summarize articles for you or write your presentation. That part is yours.
+    </div>
+    <div class="card">
+      <div class="card-label">Before we begin</div>
+      <div class="card-body">First, let's find out how comfortable you are reading in English. This helps the tool know how to talk to you. There are no wrong answers — it just helps you.</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="startAssessment()">Start reading check →</button>
+    </div>
+  </div>
+
+  <!-- ── STAGE: ASSESSMENT ── -->
+  <div id="stage-assessment" class="stage">
+    <div class="progress-bar">
+      <div class="progress-step done"></div>
+      <div class="progress-step active"></div>
+      <div class="progress-step"></div>
+      <div class="progress-step"></div>
+      <div class="progress-step"></div>
+    </div>
+    <div class="section-title">Reading check — question <span id="q-num">1</span> of 3</div>
+    <div id="assessment-container"></div>
+  </div>
+
+  <!-- ── STAGE: TOPIC CHOICE ── -->
+  <div id="stage-topic" class="stage">
+    <div class="progress-bar">
+      <div class="progress-step done"></div>
+      <div class="progress-step done"></div>
+      <div class="progress-step active"></div>
+      <div class="progress-step"></div>
+      <div class="progress-step"></div>
+    </div>
+    <div class="section-title">Choose your topic</div>
+    <div class="choice-grid">
+      <button class="choice-btn" onclick="goTopicGuide()">
+        <span class="choice-icon">💬</span>
+        <span class="choice-title">Help me find a topic</span>
+        <span class="choice-desc">Answer a few questions and I'll suggest some ideas</span>
+      </button>
+      <button class="choice-btn" onclick="goTopicDirect()">
+        <span class="choice-icon">✅</span>
+        <span class="choice-title">I already have a topic</span>
+        <span class="choice-desc">Skip ahead and start finding sources</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── STAGE: TOPIC GUIDE ── -->
+  <div id="stage-topic-guide" class="stage">
+    <div class="progress-bar">
+      <div class="progress-step done"></div>
+      <div class="progress-step done"></div>
+      <div class="progress-step active"></div>
+      <div class="progress-step"></div>
+      <div class="progress-step"></div>
+    </div>
+    <div class="section-title">Let's find your topic</div>
+    <div id="guide-container"></div>
+  </div>
+
+  <!-- ── STAGE: TOPIC DIRECT ── -->
+  <div id="stage-topic-direct" class="stage">
+    <div class="progress-bar">
+      <div class="progress-step done"></div>
+      <div class="progress-step done"></div>
+      <div class="progress-step active"></div>
+      <div class="progress-step"></div>
+      <div class="progress-step"></div>
+    </div>
+    <div class="section-title">What is your topic?</div>
+    <div class="card">
+      <div class="q-sub">Type your topic below. Be as specific as you can — for example, "air pollution in Mexico City" is better than just "pollution."</div>
+      <input type="text" id="direct-topic-input" placeholder="Type your topic here..." />
+      <div id="direct-topic-error" class="error-msg" style="display:none">Please type a topic first.</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="confirmDirectTopic()">Find sources for this topic →</button>
+    </div>
+  </div>
+
+  <!-- ── STAGE: TOPIC CONFIRM ── -->
+  <div id="stage-topic-confirm" class="stage">
+    <div class="progress-bar">
+      <div class="progress-step done"></div>
+      <div class="progress-step done"></div>
+      <div class="progress-step done"></div>
+      <div class="progress-step active"></div>
+      <div class="progress-step"></div>
+    </div>
+    <div class="section-title">Your topic</div>
+    <div class="card">
+      <div class="card-label">Topic confirmed</div>
+      <div id="confirmed-topic-display" class="topic-confirmed"></div>
+      <div id="topic-orientation" class="topic-orient"></div>
+    </div>
+    <div class="card">
+      <div class="card-label">Your research roadmap</div>
+      <div class="q-sub">As you read your sources, look for answers to these questions:</div>
+      <ul class="roadmap-list">
+        <li><strong>Who</strong> — who is being hurt? who is causing it?</li>
+        <li><strong>What</strong> — what is actually happening?</li>
+        <li><strong>Why</strong> — why is it happening? who benefits?</li>
+        <li><strong>When</strong> — when did it start?</li>
+        <li><strong>Where</strong> — where exactly is it happening?</li>
+        <li><strong>How</strong> — how does it hurt people?</li>
+      </ul>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="findSources()">Find me reliable sources →</button>
+      <button class="btn" onclick="showStage('stage-topic')">Change topic</button>
+    </div>
+  </div>
+
+  <!-- ── STAGE: SOURCES ── -->
+  <div id="stage-sources" class="stage">
+    <div class="progress-bar">
+      <div class="progress-step done"></div>
+      <div class="progress-step done"></div>
+      <div class="progress-step done"></div>
+      <div class="progress-step done"></div>
+      <div class="progress-step active"></div>
+    </div>
+    <div class="section-title">Your sources</div>
+    <div id="sources-loading" class="loading-msg" style="display:none">
+      <div class="spinner"></div>
+      <span id="sources-loading-text">Finding reliable sources for your topic...</span>
+    </div>
+    <div id="sources-container"></div>
+    <div id="sources-done" style="display:none">
+      <div class="next-card">
+        <div class="card-label">Next steps</div>
+        <ul class="checklist">
+          <li><span class="check-icon">→</span> Click "Copy MLA citation" for each source and paste it into your MyBib project.</li>
+          <li><span class="check-icon">→</span> Click the source title to open the real article. Read it yourself.</li>
+          <li><span class="check-icon">→</span> In MyBib, write your 4–5 sentence annotation in English. No translators.</li>
+          <li><span class="check-icon">→</span> Look for answers to the Who / What / Why / When / Where / How questions as you read.</li>
+          <li><span class="check-icon">→</span> You need at least 5 sources total. Click "Find more sources" if you need more.</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button class="btn" onclick="findMoreSources()">Find more sources</button>
+        <button class="btn" onclick="startOver()">Start over</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STAGE: GUARDRAIL ── -->
+  <div id="stage-guardrail" class="stage">
+    <div class="refuse-box">
+      <div class="refuse-title">That's the Uber, not the bike.</div>
+      <div id="guardrail-message" class="refuse-body"></div>
+    </div>
+    <div class="btn-row" style="margin-top:1rem">
+      <button class="btn btn-primary" id="guardrail-back-btn">Go back</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ─────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────
+var API_KEY = '';
+var readingLevel = 3;
+var confirmedTopic = '';
+var foundSources = [];
+var guideStep = 0;
+var guideAnswers = {};
+var assessmentScores = [];
+var currentQ = 0;
+
+// ─────────────────────────────────────────
+//  ASSESSMENT PASSAGES — ~400-500 Lexile
+// ─────────────────────────────────────────
+var assessmentQuestions = [
+  {
+    // ~400 Lexile — food/hunger, simple and concrete
+    passage: "Many people in the world do not have enough food to eat. Some families go a whole day without a meal. This is called hunger. Hunger can hurt children the most. When children do not eat enough, it is hard for them to grow and learn in school. Many groups are working to help people get more food.",
+    question: "What is the main idea of this paragraph?",
+    options: [
+      "Hunger is a problem that hurts many people, especially children.",
+      "Children do not like to go to school.",
+      "Food is easy to find in most places.",
+      "Groups are the only ones who can help with hunger."
+    ],
+    correct: 0,
+    level: 2
+  },
+  {
+    // ~450 Lexile — clean water, slightly longer sentences
+    passage: "Clean water is important for life. Many people around the world do not have clean water near their homes. They must walk far to find water. Sometimes the water they find is dirty and makes them sick. Girls and women often spend hours each day getting water for their families. This means they cannot go to school or work.",
+    question: "According to the paragraph, what is one problem caused by not having clean water nearby?",
+    options: [
+      "People drink too much water.",
+      "Girls and women cannot go to school or work because they spend time getting water.",
+      "Water is too cold to drink.",
+      "People do not know how to find water."
+    ],
+    correct: 1,
+    level: 3
+  },
+  {
+    // ~500 Lexile — deforestation, introduces slightly harder vocab with context
+    passage: "Every year, large areas of forest are cut down around the world. This is called deforestation. Forests are cut down to make room for farms, roads, and buildings. When forests disappear, many animals lose their homes. Forests also help clean the air we breathe. Without them, the air becomes more polluted. Local communities that depend on forests for food and medicine are also hurt.",
+    question: "What problem does the paragraph describe about cutting down forests?",
+    options: [
+      "Forests make it hard to build roads.",
+      "Cutting forests causes many problems — animals lose homes, air gets more polluted, and communities are hurt.",
+      "Forests only matter to animals, not people.",
+      "Deforestation helps local communities get more food."
+    ],
+    correct: 1,
+    level: 4
+  }
+];
+
+var guideSteps = [
+  { key: 'country', label: 'Where are you from?', sub: 'You can name your home country or city. Or say "I grew up here in the US."', placeholder: 'Type your answer...' },
+  { key: 'feeling', label: 'Is there something happening in the world — or in your home country — that makes you angry, sad, or worried?', sub: 'There is no wrong answer. Think about your family, your community, or things you have seen on the news.', placeholder: 'Describe it in a few words...' },
+  { key: 'wish', label: 'Is there something you wish more people in America knew about?', sub: 'This could be a problem, a place, a group of people, or an injustice.', placeholder: 'Type your answer...' }
+];
+
+// ─────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', function() {
+  var saved = localStorage.getItem('eld_api_key');
+  if (saved) { API_KEY = saved; showStage('stage-welcome'); }
+  else { showStage('stage-apikey'); }
+});
+
+// ─────────────────────────────────────────
+//  API KEY SETUP
+// ─────────────────────────────────────────
+function submitApiKey() {
+  var val = document.getElementById('api-key-input').value.trim();
+  if (!val) { document.getElementById('api-key-error').style.display = 'block'; return; }
+  API_KEY = val;
+  localStorage.setItem('eld_api_key', val);
+  showStage('stage-welcome');
+}
+
+// ─────────────────────────────────────────
+//  STAGE NAVIGATION
+// ─────────────────────────────────────────
+function showStage(id) {
+  document.querySelectorAll('.stage').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ─────────────────────────────────────────
+//  ASSESSMENT
+// ─────────────────────────────────────────
+function startAssessment() { showStage('stage-assessment'); renderQuestion(0); }
+
+function renderQuestion(idx) {
+  currentQ = idx;
+  document.getElementById('q-num').textContent = idx + 1;
+  var q = assessmentQuestions[idx];
+  var opts = q.options.map(function(opt, i) {
+    return '<button class="answer-option" onclick="selectAnswer(' + i + ')">' + opt + '</button>';
+  }).join('');
+  document.getElementById('assessment-container').innerHTML =
+    '<div class="card"><div class="card-label">Read this passage</div><div class="card-body">' + q.passage + '</div></div>' +
+    '<div class="card"><div class="q-label">' + q.question + '</div>' + opts +
+    '<div id="assess-feedback" style="display:none;margin-top:1rem;"></div></div>';
+}
+
+function selectAnswer(chosen) {
+  var q = assessmentQuestions[currentQ];
+  var buttons = document.querySelectorAll('.answer-option');
+  buttons.forEach(function(b) { b.onclick = null; });
+  if (chosen === q.correct) {
+    buttons[chosen].classList.add('selected');
+    assessmentScores.push(q.level);
+  } else {
+    buttons[chosen].classList.add('wrong');
+    buttons[q.correct].classList.add('selected');
+    assessmentScores.push(Math.max(1, q.level - 1));
+  }
+  var fb = document.getElementById('assess-feedback');
+  fb.style.display = 'block';
+  if (currentQ < assessmentQuestions.length - 1) {
+    fb.innerHTML = '<button class="btn btn-primary" onclick="renderQuestion(' + (currentQ + 1) + ')">Next question →</button>';
+  } else {
+    fb.innerHTML = '<button class="btn btn-primary" onclick="finishAssessment()">Continue →</button>';
+  }
+}
+
+function finishAssessment() {
+  var sum = assessmentScores.reduce(function(a, b) { return a + b; }, 0);
+  readingLevel = Math.round(sum / assessmentScores.length);
+  showStage('stage-topic');
+}
+
+// ─────────────────────────────────────────
+//  TOPIC GUIDE
+// ─────────────────────────────────────────
+function goTopicGuide() { guideStep = 0; guideAnswers = {}; showStage('stage-topic-guide'); renderGuideStep(); }
+function goTopicDirect() { showStage('stage-topic-direct'); }
+
+function renderGuideStep() {
+  var step = guideSteps[guideStep];
+  var backBtn = guideStep > 0 ? '<button class="btn" onclick="guideBack()">← Back</button>' : '';
+  var nextLabel = guideStep < guideSteps.length - 1 ? 'Next →' : 'Suggest topics →';
+  document.getElementById('guide-container').innerHTML =
+    '<div class="card"><div class="q-label">' + step.label + '</div>' +
+    '<div class="q-sub">' + step.sub + '</div>' +
+    '<textarea id="guide-input" placeholder="' + step.placeholder + '"></textarea>' +
+    '<div id="guide-error" class="error-msg" style="display:none">Please write something before continuing.</div></div>' +
+    '<div class="btn-row">' + backBtn + '<button class="btn btn-primary" onclick="guideNext()">' + nextLabel + '</button></div>';
+}
+
+function guideNext() {
+  var val = document.getElementById('guide-input').value.trim();
+  if (!val) { document.getElementById('guide-error').style.display = 'block'; return; }
+  guideAnswers[guideSteps[guideStep].key] = val;
+  if (guideStep < guideSteps.length - 1) { guideStep++; renderGuideStep(); }
+  else { suggestTopics(); }
+}
+
+function guideBack() {
+  guideStep--;
+  renderGuideStep();
+  var saved = guideAnswers[guideSteps[guideStep].key];
+  if (saved) { setTimeout(function() { var el = document.getElementById('guide-input'); if (el) el.value = saved; }, 0); }
+}
+
+async function suggestTopics() {
+  document.getElementById('guide-container').innerHTML = '<div class="loading-msg"><div class="spinner"></div><span>Thinking of topics based on your answers...</span></div>';
+  var prompt = 'A student answered these questions:\n- Home country/place: ' + guideAnswers.country +
+    '\n- Things that make them angry/sad/worried: ' + guideAnswers.feeling +
+    '\n- Things they wish Americans knew about: ' + guideAnswers.wish +
+    '\n\nSuggest exactly 4 specific, researchable world issues topics for a high school research project. Each topic should be specific (not just "climate change" but "deforestation in the Amazon"), related to their answers where possible, and a real current global issue.\n\nReturn ONLY a JSON array of 4 objects: [{"title":"...","description":"one sentence plain explanation"}]\nNo markdown, no preamble, just the JSON array.';
+  try {
+    var res = await callClaude(prompt, true);
+    var topics = JSON.parse(res);
+    var opts = topics.map(function(t) {
+      return '<button class="answer-option" onclick="pickTopic(\'' + encodeURIComponent(t.title) + '\')">' +
+        '<span class="answer-opt-title">' + t.title + '</span>' +
+        '<span class="answer-opt-desc">' + t.description + '</span></button>';
+    }).join('');
+    document.getElementById('guide-container').innerHTML =
+      '<div class="card"><div class="card-label">Topics for you</div>' +
+      '<div class="q-sub">Based on your answers, here are some ideas. Pick one that interests you most.</div>' + opts + '</div>' +
+      '<div class="card"><div class="q-sub">Want something different? Type your own topic:</div>' +
+      '<input type="text" id="custom-topic" placeholder="Type a different topic..." />' +
+      '<div class="btn-row"><button class="btn" onclick="useCustomTopic()">Use this topic →</button></div></div>';
+  } catch(e) {
+    document.getElementById('guide-container').innerHTML =
+      '<div class="card"><div class="card-body">Sorry, something went wrong. Please type your own topic below.</div>' +
+      '<input type="text" id="custom-topic" placeholder="Type your topic here..." />' +
+      '<div class="btn-row"><button class="btn btn-primary" onclick="useCustomTopic()">Use this topic →</button></div></div>';
+  }
+}
+
+function pickTopic(enc) { confirmedTopic = decodeURIComponent(enc); loadTopicConfirm(); }
+function useCustomTopic() { var val = document.getElementById('custom-topic').value.trim(); if (!val) return; confirmedTopic = val; loadTopicConfirm(); }
+function confirmDirectTopic() { var val = document.getElementById('direct-topic-input').value.trim(); if (!val) { document.getElementById('direct-topic-error').style.display = 'block'; return; } confirmedTopic = val; loadTopicConfirm(); }
+
+// ─────────────────────────────────────────
+//  TOPIC CONFIRM
+// ─────────────────────────────────────────
+async function loadTopicConfirm() {
+  showStage('stage-topic-confirm');
+  document.getElementById('confirmed-topic-display').textContent = confirmedTopic;
+  document.getElementById('topic-orientation').textContent = 'Loading a quick overview...';
+  var prompt = 'Give a 2-3 sentence plain-language orientation to this topic for a high school ELD student: "' + confirmedTopic + '". Use ' + levelDesc() + '. Focus on what the issue is and why it matters. No headers, lists, or citations. Just plain prose.';
+  try {
+    var text = await callClaude(prompt);
+    document.getElementById('topic-orientation').textContent = text;
+  } catch(e) {
+    document.getElementById('topic-orientation').textContent = 'Ready to find sources for this topic.';
+  }
+}
+
+// ─────────────────────────────────────────
+//  SOURCE FINDING
+// ─────────────────────────────────────────
+async function findSources() {
+  showStage('stage-sources');
+  document.getElementById('sources-loading').style.display = 'flex';
+  document.getElementById('sources-container').innerHTML = '';
+  document.getElementById('sources-done').style.display = 'none';
+  foundSources = [];
+  await loadSources();
+}
+
+async function findMoreSources() {
+  document.getElementById('sources-loading').style.display = 'flex';
+  document.getElementById('sources-loading-text').textContent = 'Finding more sources...';
+  document.getElementById('sources-done').style.display = 'none';
+  await loadSources();
+}
+
+async function loadSources() {
+  var prompt = 'You are a research librarian helping a high school ELD student find reliable sources.\n\nTopic: "' + confirmedTopic + '"\n\nFind 3 reliable, credible, publicly accessible sources on this topic. For each source:\n1. A real working URL to a specific article (not a homepage) from BBC, NPR, Reuters, AP News, Human Rights Watch, Amnesty International, UN agencies, government sites, or reputable news outlets. No paywalls.\n2. Article title\n3. Publication name\n4. Publication date\n5. CRAAP evaluation: rate each criterion PASS or WARN with a 1-sentence reason\n6. 2-sentence explanation of WHY this source is credible — do NOT summarize the content\n7. Reading difficulty: EASY, MEDIUM, or HARD for a high school student\n8. MLA citation\n9. 2-3 sentence plain-language description of what KIND of information this source contains — NOT what it says. Use ' + levelDesc() + '.\n\nDo NOT summarize article content. All URLs must be real specific article URLs. Vary source types.\nReturn ONLY a JSON array, no markdown, no preamble.\n\nFormat: [{"title":"...","publication":"...","date":"...","url":"...","craap":{"currency":{"rating":"PASS","reason":"..."},"relevance":{"rating":"PASS","reason":"..."},"authority":{"rating":"PASS","reason":"..."},"accuracy":{"rating":"PASS","reason":"..."},"purpose":{"rating":"PASS","reason":"..."}},"why_credible":"...","difficulty":"MEDIUM","mla":"...","theme_summary":"..."}]';
+  try {
+    var res = await callClaude(prompt, true);
+    var sources = JSON.parse(res);
+    foundSources = foundSources.concat(sources);
+    renderSources(sources);
+  } catch(e) {
+    document.getElementById('sources-loading').style.display = 'none';
+    document.getElementById('sources-container').innerHTML =
+      '<div class="card"><div class="card-body">Something went wrong finding sources. Please try again.</div>' +
+      '<div class="btn-row"><button class="btn btn-primary" onclick="findMoreSources()">Try again</button></div></div>';
+  }
+}
+
+function renderSources(sources) {
+  document.getElementById('sources-loading').style.display = 'none';
+  var container = document.getElementById('sources-container');
+  sources.forEach(function(s, i) {
+    var globalIdx = foundSources.length - sources.length + i;
+    var diffClass = s.difficulty === 'EASY' ? 'diff-easy' : s.difficulty === 'HARD' ? 'diff-hard' : 'diff-medium';
+    var craapHtml = Object.entries(s.craap).map(function(entry) {
+      return '<span class="craap-pill ' + (entry[1].rating === 'PASS' ? 'craap-pass' : 'craap-warn') +
+        '" title="' + entry[1].reason + '">' +
+        entry[0].charAt(0).toUpperCase() + entry[0].slice(1) + ': ' + entry[1].rating + '</span>';
+    }).join('');
+    var div = document.createElement('div');
+    div.className = 'source-card';
+    div.innerHTML =
+      '<div><a href="' + s.url + '" class="source-link" target="_blank" rel="noopener">' + s.title + '</a>' +
+      '<span class="diff-badge ' + diffClass + '">' + s.difficulty + '</span></div>' +
+      '<div class="source-meta">' + s.publication + ' · ' + s.date + '</div>' +
+      '<div class="source-theme">' + s.theme_summary + '</div>' +
+      '<div class="craap-row">' + craapHtml + '</div>' +
+      '<div class="why-credible"><strong class="why-strong">Why this source is credible:</strong> ' + s.why_credible + '</div>' +
+      '<div class="mla-box" id="mla-' + globalIdx + '">' + s.mla + '</div>' +
+      '<div class="annot-reminder">📋 <strong>MyBib reminder:</strong> After reading this article, write 4–5 sentences in English (no translator) in the annotation box in MyBib explaining what you learned.</div>' +
+      '<div class="btn-row">' +
+      '<button class="btn" onclick="copyMLA(' + globalIdx + ', this)">Copy MLA citation</button>' +
+      '<button class="btn" onclick="toggleSimplified(' + globalIdx + ', \'' + encodeURIComponent(s.url) + '\', \'' + encodeURIComponent(s.title) + '\')">Get simpler English version</button>' +
+      '</div>' +
+      '<div id="simplified-' + globalIdx + '" style="display:none"></div>';
+    container.appendChild(div);
+  });
+  document.getElementById('sources-done').style.display = 'block';
+}
+
+function copyMLA(idx, btn) {
+  var mla = document.getElementById('mla-' + idx).textContent;
+  navigator.clipboard.writeText(mla).then(function() {
+    btn.textContent = 'Copied!';
+    setTimeout(function() { btn.textContent = 'Copy MLA citation'; }, 2000);
+  });
+}
+
+async function toggleSimplified(idx, encodedUrl, encodedTitle) {
+  var container = document.getElementById('simplified-' + idx);
+  if (container.style.display !== 'none') { container.style.display = 'none'; return; }
+  container.style.display = 'block';
+  container.innerHTML = '<div class="loading-msg"><div class="spinner"></div><span>Fetching the article and simplifying the language...</span></div>';
+  var url = decodeURIComponent(encodedUrl);
+  var title = decodeURIComponent(encodedTitle);
+  var prompt = 'Search for and fetch this article, then rewrite its KEY FACTS at ' + levelDesc() + '.\n\nArticle URL: ' + url + '\nArticle title: ' + title + '\n\nInstructions:\n1. Search for and fetch the article content\n2. Identify the 5-7 most important facts\n3. Rewrite ONLY those key facts in simple English at the specified level\n4. Keep it to about 150-200 words\n5. Start with: "This article is about..."\n6. End with: "--- This is a simplified version. You must still read the original article at the link above. ---"\n7. If you cannot access the article, say: "Sorry, I could not access this article. Please click the link above to read it directly."\n\nOnly use information from the article. No opinions.';
+  try {
+    var text = await callClaudeWithSearch(prompt);
+    container.innerHTML =
+      '<div class="simplified-wrap"><div class="simplified-badge">Simplified version — you must still read the original</div>' +
+      '<div class="simplified-text">' + text + '</div></div>';
+  } catch(e) {
+    container.innerHTML = '<div class="annot-reminder">Could not fetch this article automatically. Please click the title link above to read it directly.</div>';
+  }
+}
+
+// ─────────────────────────────────────────
+//  HELPERS
+// ─────────────────────────────────────────
+function levelDesc() {
+  if (readingLevel <= 1) return 'a 1st-2nd grade English reading level with very short sentences and only the most basic vocabulary';
+  if (readingLevel <= 2) return 'a 2nd-3rd grade English reading level with short simple sentences';
+  if (readingLevel <= 3) return 'a 3rd-4th grade English reading level with simple sentences';
+  if (readingLevel <= 4) return 'a 5th-6th grade English reading level';
+  return 'a 7th-8th grade English reading level';
+}
+
+function startOver() {
+  confirmedTopic = ''; foundSources = []; readingLevel = 3;
+  assessmentScores = []; currentQ = 0; guideStep = 0; guideAnswers = {};
+  document.getElementById('sources-container').innerHTML = '';
+  showStage('stage-welcome');
+}
+
+// ─────────────────────────────────────────
+//  API CALLS
+// ─────────────────────────────────────────
+var SYSTEM_PROMPT = 'You are a research assistant for a high school ELD (English Language Development) World History class. Your ONLY job is to help students find reliable sources and understand research concepts.\n\nSTRICT RULES — NEVER VIOLATE THESE:\n1. NEVER write a student\'s presentation, essay, slides, or analysis for them\n2. NEVER summarize what an article says in detail\n3. NEVER answer factual questions about the topic itself as if writing their report\n4. NEVER write slide content, outlines, or presentation scripts\n5. If a student asks you to do their work, say: "That\'s the Uber, not the bike. I can help you find sources, but the reading and writing is yours to do."\n6. You MAY: find sources, evaluate source credibility, simplify article language for reading comprehension, suggest research topics, explain what the CRAAP test means\n7. When returning JSON, return ONLY valid JSON with no markdown formatting, no backticks, no preamble.';
+
+async function callClaude(userPrompt, jsonMode) {
+  var resp = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': API_KEY,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 2000,
+      system: SYSTEM_PROMPT,
+      messages: [{ role: 'user', content: userPrompt }]
+    })
+  });
+  if (!resp.ok) {
+    var err = await resp.json().catch(function() { return {}; });
+    throw new Error('API error ' + resp.status + ': ' + (err.error && err.error.message ? err.error.message : 'unknown'));
+  }
+  var data = await resp.json();
+  var text = data.content.filter(function(b) { return b.type === 'text'; }).map(function(b) { return b.text; }).join('');
+  if (jsonMode) { return text.replace(/```json|```/g, '').trim(); }
+  return text;
+}
+
+async function callClaudeWithSearch(userPrompt) {
+  var resp = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': API_KEY,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 2000,
+      system: 'You are a research assistant for a high school ELD World History class. You fetch articles and simplify the language to help students who are learning English. You never write student work for them.',
+      tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+      messages: [{ role: 'user', content: userPrompt }]
+    })
+  });
+  if (!resp.ok) throw new Error('API error: ' + resp.status);
+  var data = await resp.json();
+  var text = data.content.filter(function(b) { return b.type === 'text'; }).map(function(b) { return b.text; }).join('');
+  if (!text) throw new Error('No text response');
+  return text;
+}
+</script>
+</body>
+</html>
